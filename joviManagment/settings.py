@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-em=*clk!8hon8no&!vd1&6t=vv4yqr_ll@$7jm8=)z)g9rj#l(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["95.179.242.123","www.jovialorder.org"]
 
 
 # Application definition
@@ -79,8 +79,12 @@ WSGI_APPLICATION = 'joviManagment.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / "haile",
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME':"MS",
+        "USER":'eliah',
+        'PASSWORD':"321@RREEWw",
+        'HOST':'95.179.242.123',
+        'PORT':'3306'
     }
 }
 
