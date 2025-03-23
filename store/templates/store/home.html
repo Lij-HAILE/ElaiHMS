@@ -1,0 +1,517 @@
+{%extends 'base.html' %}
+{%load static%}
+{%block title%}
+Jovial
+{%endblock%}
+{%block content%}
+    <!-- header section strats -->
+    <header class="header_section">
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg custom_nav-container">
+                <a class="navbar-brand">
+                    <span>
+                        jovial
+                    </span>
+                </a>
+                <div>
+                    <div class="custom_menu-btn">
+                        <button onclick="openNav()">
+                            <span class="s-1"> </span>
+                            <span class="s-2"> </span>
+                            <span class="s-3"> </span>
+                        </button>
+                       
+                    </div>
+
+                </div>
+            </nav>
+        </div>
+    </header>
+        <div id="homeNav" class="overlay2">
+            <div class="innerPart">
+                <a class="link-secondary" onclick="openNav()" href="#home">Home</a>
+                <a class="link-auto link-secondary" onclick="openNav()" href="#about-us">About</a>
+                <a class="link-auto link-secondary" onclick="openNav()" href="#shop">Shop</a>
+                <a class="link-auto link-secondary" onclick="openNav()" href="#contact">Contact</a>
+                <a class="link-auto link-white w-100" href="{%url 'user-login'%}"><button style="background-color: transparent;" class="btn btn-info w-100">LogIN</button></a>
+            </div>
+        </div>
+    
+    <!-- end header section -->
+
+    <!-- slider section -->
+    <section id="home" class="slider_section position-relative">
+        <div class="slider_bg_box">
+            <video src="{%static 'back.MOV'%}" autoplay loop muted style="z-index: 10;object-fit: cover;height: 100%;width: 100%;"></video>
+            <div style="width: 100%;height: 100%;left:0;top:0;position: absolute;background-color: rgba(0, 0, 0, 0.7);z-index: 10;">
+            </div>
+        </div>
+        <div class="slider_bg"></div>
+        <div class="container">
+            <div class="col-md-9 col-lg-8">
+                <div class="detail-box">
+                    <h1>
+                        jovial
+                        <br>Industries
+                    </h1>
+                    <p>
+                        Welcome to Jovial Industries, a leading manufacturer of high-quality marbles and granites. Our journey began with a commitment to excellence and a passion for crafting beautiful, durable surfaces. Over the years, we have honed our skills to become a trusted
+                        name in the industry, known for our attention to detail and dedication to customer satisfaction.
+                    </p>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+    <!-- end slider section -->
+    <!-- about section -->
+
+    <section id="about-us" class="about_section  pt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="img-box">
+                        <img src="{% static 'images/o1.jpg' %}" alt="">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="detail-box">
+                        <div class="heading_container">
+                            <h2>
+                                About Us
+                            </h2>
+                        </div>
+                        <p>
+                            Established in 2009, Jovial Marble & Granite is a prominent manufacturer and supplier specializing in granite slabs, marble slabs, and basalt. The company adheres to industry standards, ensuring high-quality products for its clients.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- end about section -->
+
+    <!-- offer section -->
+
+    <section class="offer_section layout_padding">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-7 px-0">
+                    <div class="box offer-box1">
+                        <img src="{% static 'images/test-1.jpg' %}" alt="">
+                        <div class="detail-box">
+                            <h2>
+                                Granite
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5 px-0">
+                    <div class="box offer-box2">
+                        <img src="{% static 'images/test-4.jpg' %}" alt="">
+                        <div class="detail-box">
+                            <h2>
+                                Basalt
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="box offer-box3">
+                        <img src="{%static 'images/test-3.jpg' %}" style="object-fit: cover;" alt="">
+                        <div class="detail-box">
+                            <h2>
+                                Marble
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- end offer section -->
+    <!-- gallery section -->
+    <div class="container">
+        <div class="gallery-title">
+            <h2>OUR GALLERY</h2>
+        </div>
+        <div class="grid-container">
+            <figure>
+                <img src="{%static 'store & gallery/gallery 07.jpg'%}" alt="A windmill" />
+            </figure>
+            <figure>
+                <img src="{% static 'store & gallery/gallery.jpg'%}" alt="first" />
+            </figure>
+            <figure>
+                <img src="{% static 'store & gallery/gallery 02.jpg'%}" alt="Sunset and boats" />
+            </figure>
+            <figure>
+                <img src="{% static 'store & gallery/gallery 03.jpg'%}" alt="a river in the snow" />
+            </figure>
+            <figure>
+                <img src="{% static 'store & gallery/gallery 04.jpg'%}" alt="a single checked balloon" />
+            </figure>
+            <figure>
+                <img src="{% static 'store & gallery/gallery 05.jpg'%}" alt="a hot air balloon shaped like a dog" />
+            </figure>
+            <figure>
+                <img src="{% static 'store & gallery/gallery 06.webp'%}" alt="View from a hot air balloon of other balloons" />
+            </figure>
+            <figure>
+                <img src="{% static 'store & gallery/gallery 001.jpg'%}" alt="a balloon fairground ride" />
+            </figure>
+            <figure>
+                <img src="{% static 'store & gallery/gallery 08.webp'%}" alt="sunrise over a harbor" />
+            </figure>
+        </div>
+    </div>
+
+    <!--end gallery section -->
+    <!-- client section -->
+
+    <section id="shop" class="shop_section layout_padding">
+        <div class="container">
+            <div class="heading_container heading_center">
+                <h2>
+                    Latest Products
+                </h2>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="box">
+                        <a href="">
+                            <div class="img-box">
+                                <img src="{% static 'store & gallery/store.jpg'%}" alt="">
+                            </div>
+                            <div class="detail-box">
+                                <h6>
+                                    Sample 1
+                                </h6>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="box">
+                        <a href="">
+                            <div class="img-box">
+                                <img src="{% static 'store & gallery/store 01.jpg'%}" alt="">
+                            </div>
+                            <div class="detail-box">
+                                <h6>
+                                    Sample 2
+                                </h6>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="box">
+                        <a href="">
+                            <div class="img-box">
+                                <img src="{%static 'store & gallery/store 02.jpg' %}" alt="">
+                            </div>
+                            <div class="detail-box">
+                                <h6>
+                                    Sample 3
+                                </h6>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="box">
+                        <a href="">
+                            <div class="img-box">
+                                <img src="{%static 'store & gallery/store 03.jpg'%}" alt="">
+                            </div>
+                            <div class="detail-box">
+                                <h6>
+                                    Sample 4
+                                </h6>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="box">
+                        <a href="">
+                            <div class="img-box">
+                                <img src="{%static 'store & gallery/store 04.jpg'%}" alt="">
+                            </div>
+                            <div class="detail-box">
+                                <h6>
+                                    Sample 5
+                                </h6>
+                            </div>
+
+                        </a>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="box">
+                        <a href="">
+                            <div class="img-box">
+                                <img style="object-fit: cover;" src="{% static 'store & gallery/store 05.jpg'%}" alt="">
+                            </div>
+                            <div class="detail-box">
+                                <h6>
+                                    Sample 6
+                                </h6>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="box">
+                        <a href="">
+                            <div class="img-box">
+                                <img src="{% static 'store & gallery/store 06.jpg' %}" alt="">
+                            </div>
+                            <div class="detail-box">
+                                <h6>
+                                    Sample 7
+                                </h6>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="box">
+                        <a href="">
+                            <div class="img-box">
+                                <img src="{% static 'store & gallery/store 06.webp'%}" alt="">
+                            </div>
+                            <div class="detail-box">
+                                <h6>
+                                    Sample 8
+                                </h6>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-box">
+            </div>
+        </div>
+    </section>
+
+    <!-- end client section -->
+
+    <!-- info section -->
+    <section id='contact' class="info_section " style="padding-bottom: 35px;">
+        <div class="container">
+            <div class="row info_form_social_row">
+                <!--                 <div class="col-md-8 col-lg-9">
+                    <div class="info_form">
+                        <form action="">
+                            <input type="email" placeholder="Enter your email">
+                            <button>
+                <i class="fa fa-arrow-right" aria-hidden="true"></i>
+              </button>
+                        </form>
+                    </div>
+                </div> -->
+
+                <!--                 <div class="col-md-4 col-lg-3">
+
+                    <div class="social_box">
+                        <a href="">
+                            <i class="fa fa-facebook" aria-hidden="true"></i>
+                        </a>
+                        <a href="">
+                            <i class="fa fa-twitter" aria-hidden="true"></i>
+                        </a>
+                        <a href="">
+                            <i class="fa fa-linkedin" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div> -->
+            </div>
+            <div class="row info_main_row">
+                <div class="col-md-6 col-lg-3">
+                    <div class="info_links">
+                        <h4>
+                            Menu
+                        </h4>
+                        <div class="info_links_menu">
+                            <a href="#home">Home</a>
+                            <a href="#about-us">About</a>
+                            <a href="#shop">Shop</a>
+                            <a href="#contact">Contact</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="info_insta">
+                        <h4>
+                            our products
+                        </h4>
+                        <div class="insta_box">
+                            <div class="img-box">
+                                <img src="{% static 'images/p1.png'%}" alt="">
+                            </div>
+                            <p>
+                                long established fact that a reader
+                            </p>
+                        </div>
+                        <div class="insta_box">
+                            <div class="img-box">
+                                <img src="{% static 'images/p2.png'%}" alt="">
+                            </div>
+                            <p>
+                                long established fact that a reader
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="info_detail">
+                        <h4>
+                            About Us
+                        </h4>
+                        <p class="mb-0">
+                            <ul>
+                                <li> Processed in compliance with industry standards<br>
+                                    <li> Excellent finish, elegant looks, high strength<br>
+                                        <li>Exquisite design Cater to diverse requirements of the construction industry
+                            </ul>
+
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <h4>
+                        Contact Us
+                    </h4>
+                    <div class="info_contact">
+                        <a class="d-flex" href="https://www.google.com/maps/place/AB+Zone+Business+Center+%7C+Urael+%7C+%E1%8A%A4%E1%89%A2+%E1%8B%9E%E1%8A%95+%E1%89%A2%E1%8B%9D%E1%8A%90%E1%88%B5+%E1%88%B4%E1%8A%95%E1%89%B0%E1%88%AD+%7C+%E1%8A%A1%E1%88%AB%E1%8A%A4%E1%88%8D/@9.009605,38.7725649,17z/data=!3m1!4b1!4m6!3m5!1s0x164b85a6cf75f37f:0x96070c7187a5164!8m2!3d9.009605!4d38.7751398!16s%2Fg%2F11c72kw8j6?entry=ttu"
+                            target="_blank">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                            <span>
+                                ኤቢ ዞን ቢዝነስ ሴንተር | ኡራኤል 5<sup>th</sup> Floor  
+              </span>
+                        </a>
+                        <a href="">
+                            <i class="fa fa-phone" aria-hidden="true"></i>
+                            <span>
+                              + 251 111 577557<br>
+                              +251 992 004449<br>
+                              +251 913 182858<br>
+              </span>
+                        </a>
+                        <a href="mailto:Jovialmarble@gmail.com">
+                            <i class="fa fa-envelope"></i>
+                            <span>
+                   Jovialmarble@gmail.com
+              </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- end info_section -->
+
+
+    <!-- footer section -->
+    <footer class="footer_section">
+        <div class="container">
+            <p>
+                &copy; <span id="displayYear"></span> All Rights Reserved By
+                <a href="my web">hallow</a>
+            </p>
+        </div>
+    </footer>
+    <!-- footer section -->
+    <script>
+        function openNav(event){
+            document.getElementById('homeNav').classList.toggle('overflow-change')
+        }
+    </script>
+    <style>
+        .link-black{
+            color: black;
+        }
+        .link-white{
+            color: white;
+        }
+        .link-secondary{
+            color: white;
+        }
+        .overflow-change{
+            margin-right: 0% !important;
+        }
+        .innerPart{
+    display: flex;
+    flex-direction: column;
+    background: grey;
+    gap: 15px;
+    padding: .7rem 1rem;
+    border-radius: 5px;
+        }
+        .overlay2{
+    position: fixed;
+    z-index: 1001;
+    top: 4rem;
+    margin-right:-1000px ;
+    right: 0;
+    padding: .7rem 1rem;
+    width: 300px;
+    transition: all 0.2s ease-in;
+        }
+        .gallery-title h2 {
+            font-size: 2.3rem;
+            font-weight: 700;
+            text-align: center;
+        }
+        
+        .gallery-title {
+            padding-bottom: 2rem;
+        }
+        
+        figure>img {
+            max-width: 100%;
+            display: block;
+        }
+        
+        figure {
+            margin: 0;
+            display: grid;
+            grid-template-rows: 1fr auto;
+            margin-bottom: 10px;
+            break-inside: avoid;
+        }
+        
+        figure>img {
+            grid-row: 1 / -1;
+            grid-column: 1;
+        }
+        
+        figure a {
+            color: black;
+            text-decoration: none;
+        }
+        
+        figcaption {
+            grid-row: 2;
+            grid-column: 1;
+            background-color: rgba(255, 255, 255, .5);
+            padding: .2em .5em;
+            justify-self: start;
+        }
+        
+        .grid-container {
+            column-count: 4;
+            column-gap: 10px;
+        }
+        
+        @media screen and (max-width:770px) {
+            .grid-container {
+                column-count: 2;
+                column-gap: 10px;
+            }
+        }
+    </style>
+{%endblock%}

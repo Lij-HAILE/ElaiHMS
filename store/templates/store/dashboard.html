@@ -1,0 +1,356 @@
+{%extends 'base.html'%}
+{%block title%}
+Jovial Management System
+{%endblock%}
+{%load static%}
+
+{%block stylesheets%}
+<link href="{%static 'css/style2.css'%}" rel="stylesheet" type="text/css" />
+
+{%endblock stylesheets%}
+{%block content%}
+
+
+<div class="p-3">
+    <header>
+        <h1>Order Management System({{request.user.role}})</h1>
+        <form action="{%url 'user-logout'%}">
+            <button id="logout-btn">Logout</button>
+        </form>
+    </header>
+    <div id="orders-section" class="section">
+        {%for message in messages %}
+        <div class="d-flex justify-content-center">
+            <p>{{message}}</p>
+        </div>
+        {%endfor%}
+        <h2>Orders</h2>
+    <form action="{%url 'create-order'%}" method="post"> 
+        <table id="orders-table">
+            {%csrf_token%}
+            <thead>
+                <tr>
+                    <th>Order No.</th>
+                    <th>Customer Name</th>
+                    <th>Type</th>
+                    <th>Length (m)</th>
+                    <th>Width (m)</th>
+                    <th>Pieces</th>
+                    <th>SQ.M</th>
+                    <th>ML</th>
+                    <th>Complete</th>
+
+                    <th>Special Finish</th>
+                </tr>
+            </thead>
+            <tbody id="orders-body">
+
+                {%for item in ord%}
+            <tr>
+                <td>{{item.id}}</td>
+                <td>{{item.customer}}</td>
+                <td>{{item.type}}</td>
+                <td>{{item.length}}</td>
+                <td>{{item.width}}</td>
+                <td>{{item.pieces}}</td>
+                <td>{{item.ML}}</td>
+                <td>{{item.SQ_M}}</td>
+                {%if request.user.role == "FT"%}
+                    {%if item.complete == None  %}
+                    <td><input data-id="{{item.id}}" class="w-50" type="number" onkeypress="GetData(event)" name="complete"> Pieces</td>
+                    {%elif item.pieces == item.complete%}
+                        <td>{{item.complete}} Pieces <span style="height: 25px;" class="ms-2 btn btn-success p-1 rounded-full"><i style="font-size: small;" class="d-flex align-items-center fa fa-check"></i></span></td>
+                    {%else%}
+                    <td><input data-id="{{item.id}}" value="{{item.complete}}" onkeypress="GetData(event)" class="w-50" type="number" id="daysMy" name="complete"> Pieces</td>
+                    {%endif%}
+                {%else%}
+                {%if item.complete == None%}
+                    <td>?? days</td>
+                    {%else%}
+                    <td>{{item.complete}} days</td>
+                {%endif%}
+                {%endif%}
+                {%if item.special_finish == None %}
+                <td>------------</td>
+                {%else%}
+                <td>{{item.special_finish}}</td>
+                {%endif%}
+                {%if request.user.role == "AD"%}
+            <td><button data-id="{{item.id}}" onclick="deleteOrder(event)" class="btn btn-danger"><i data-id="{{item.id}}" class="fa fa-trash"></i></button></td>
+                {%endif%}
+        </tr>
+                {%endfor%}
+
+            </tbody>
+        </table>
+    </form>
+    {% if is_paginated %}
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <span class="page-link" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </span>
+            </li>
+            {% endif %}
+            {% for i in paginator.page_range %}
+            {% if page_obj.number == i %}
+            <li class="page-item active" aria-current="page">
+                <span class="page-link">{{ i }}</span>
+            </li>
+            {% else %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+            </li>
+            {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <span class="page-link" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </span>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+        {%if request.user.role == "AD"%}
+        <div id="admin-controls" class="mt-2" >
+            <button onclick="createNewRecord(event)" data-table="0" data-body="orders-body">Add New Order</button>
+            <button onclick="addTable(event)" id="add-table-btn">Add New Table</button>
+        </div>
+        {%endif%}
+        <div id="additional-tables">
+            {%for tab in table %}   
+            <div class="section">
+                <div style="display: flex; justify-content: space-between; align-items: center">
+                    <h3>Additional Table ({{forloop.counter }})</h3>
+                    <button data-id="{{tab.id}}" onclick="deleteTable(event)" class="delete-table-btn">Delete Table</button>
+                  </div>
+                <form action="{%url 'create-order'%}" method="post"> 
+                    <table id="orders-table-${{tab.id}}">
+                        {%csrf_token%}
+                        <thead>
+                            <tr>
+                                <th>Order No.</th>
+                                <th>Customer Name</th>
+                                <th>Type</th>
+                                <th>Length ()</th>
+                                <th>Width </th>
+                                <th>Pieces</th>
+                                <th>SQ.M</th>
+                                <th>ML</th>
+                                <th>Complete</th>
+            
+                                <th>Special Finish</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orders-body-{{tab.id}}">
+            
+                            {%for item in tab.order_set.all%}
+                        <tr>
+                            <td>{{item.id}}</td>
+                            <td>{{item.customer}}</td>
+                            <td>{{item.type}}</td>
+                            <td>{{item.length}}</td>
+                            <td>{{item.width}}</td>
+                            <td>{{item.pieces}}</td>
+                            <td>{{item.ML}}</td>
+                            <td>{{item.SQ_M}}</td>
+                            {%if request.user.role == "FT"%}
+                                {%if item.complete == None  %}
+                                <td><input data-id="{{item.id}}" class="w-50" type="number" onkeypress="GetData(event)" name="complete"> Pieces</td>
+                                {%elif item.pieces == item.complete%}
+                                    <td>{{item.complete}} Pieces <span style="height: 25px;" class="ms-2 btn btn-success p-1 rounded-full"><i style="font-size: small;" class="d-flex align-items-center fa fa-check"></i></span></td>
+                                {%else%}
+                                <td><input data-id="{{item.id}}" value="{{item.complete}}" onkeypress="GetData(event)" class="w-50" type="number" id="daysMy" name="complete"> Pieces</td>
+                                {%endif%}
+                            {%else%}
+                            {%if item.complete == None%}
+                                <td>?? days</td>
+                                {%else%}
+                                <td>{{item.complete}} days</td>
+                            {%endif%}
+                            {%endif%}
+                            {%if item.special_finish == None %}
+                            <td>------------</td>
+                            {%else%}
+                            <td>{{item.special_finish}}</td>
+                            {%endif%}
+                            {%if request.user.role == "AD"%}
+                        <td><button data-id="{{item.id}}" onclick="deleteOrder(event)" class="btn btn-danger"><i data-id="{{item.id}}" class="fa fa-trash"></i></button></td>
+                            {%endif%}
+                    </tr>
+                            {%endfor%}
+            
+                        </tbody>
+                    </table>
+                </form>
+                {%if request.user.role == "AD"%}
+                <div id="admin-controls" class="mt-2" >
+                    <button data-table="{{tab.id}}" data-body="orders-body-{{tab.id}}" onclick="createNewRecord(event)">Add New Order</button>
+                </div>
+                {%endif%}
+            </div>
+            {%endfor%}
+        </div>
+    </div>
+
+    <div id="qa-section" class="section">
+        <h2>Questions & Answers</h2>
+        <div id="question-form-container">
+            <form method="post" action="{%url 'create-question'%}" >
+                {%csrf_token%}
+                <input type="text" name="title"  placeholder="Question Title" required>
+                <textarea name="desc" placeholder="Question Details" required></textarea>
+                <button type="submit">Submit Question</button>
+            </form>
+        </div>
+        <div id="questions-list">
+            {%for que in ques%}
+            <div class="question-item">
+                <h3>{{que.title}}</h3>
+                <p class="mb-2">{{que.desc}}</p>
+                <small>Asked by {{que.user}} on {{que.date|date:"M, D Y"}}</small>
+                <div class="answers">
+                    {%for an in que.answer.all%}
+                        <div class="answer">
+                        <p class="mb-1">{{an.ans}}</p>
+                        <small>answered by {{an.user}}</small>
+                        {%if request.user.role == "AT"%}
+                        <div  class="d-flex justify-content-end">
+                            <form action="{%url 'delete-answer' id=an.id %}">
+                                <button class="btn btn-danger d-flex justify-content-end">Delete</button>
+                            </form>
+                        </div>
+                        {%endif%}
+                        </div>
+                    {%endfor%}
+                </div>
+                {%if request.user.role == "AD"%}
+                <form class="mt-4" method="post" action="{%url 'create-answer' %}">
+                    {%csrf_token%}
+                    <input type="hidden" name="question" value="{{que.id}}">
+                    <input type="text" name="answer" placeholder="Your answer" required="">
+                    <button type="submit">Answer</button>
+                  </form>
+                  <div  class="d-flex justify-content-end">
+                    <form action="{%url 'delete-question' id=que.id %}">
+                        <button class="btn btn-danger d-flex justify-content-end">Delete</button>
+                    </form>
+                </div>
+                  {%endif%}
+
+            </div>
+            {%endfor%}
+        </div>
+    </div>
+</div>
+{%endblock%}
+
+{%block javascript%}
+<script>
+        function deleteTable(event){
+        event.preventDefault()
+        var id =event.target.getAttribute('data-id')
+        var xhr = new XMLHttpRequest();
+        xhr.onload = e =>{
+                window.location.reload()
+        }
+            xhr.open("POST", `/store/delete-table/${id}`, true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send()
+    }
+    function addTable(event){
+        var xhr = new XMLHttpRequest();
+        xhr.onload = e =>{
+                window.location.reload()
+        }
+            xhr.open("POST", `{%url 'create-table' %}`, true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send() 
+        event.target.setAttribute('disabled','true')
+        setTimeout(e=> {event.target.removeAttribute('disabled')},2000)
+    }
+    function deleteOrder(event){
+        event.preventDefault()
+        var id =event.target.getAttribute('data-id')
+        var xhr = new XMLHttpRequest();
+        xhr.onload = e =>{
+                window.location.reload()
+        }
+            xhr.open("POST", `/store/delete-order/${id}`, true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send()
+    }
+     function GetData (event){
+        if(event.code == "Enter"){
+            event.preventDefault()
+            var params =`id=${event.target.dataset.id}&time=${event.target.value}`
+            var xhr = new XMLHttpRequest();
+            xhr.onload = (e) => {
+                window.location.reload()
+            }
+            xhr.open("POST", "{%url 'edit-time' %}", true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send(params)
+            }
+    }
+</script>
+<script>
+    function createNewRecord(event){
+            const tbody = document.getElementById(event.target.dataset.body);
+            var t = ""
+            if( 0 < Number(event.target.dataset.table)){
+                var t =`<td class="d-none"><input type="hidden" name='table' value="${Number(event.target.dataset.table)}"/></td>`
+            }
+            const tr = document.createElement('tr');
+                tr.innerHTML = `
+      <td class="text-success">Atomatic</td>
+      <td><input type="text" name="customer" required></td>
+      <td>
+        <select name="type" required>
+          <option value="Thread" >Thread</option>
+          <option value="Thread-3">Thread-3</option>
+          <option value="Riser">Riser</option>
+          <option value="Riser-3">Riser-3</option>
+          <option value="Windowsill">Windowsill</option>
+          <option value="Windowsill-3">Windowsill-3</option>
+          <option value="Doorsill">Doorsill</option>
+          <option value="Doorsill-3">Doorsill-3</option>
+          <option value="Landing">Landing</option>
+          <option value="Landing-3">Landing-3</option>
+          <option value="Coping">Coping</option>
+          <option value="Coping-3">Coping-3</option>
+          <option value="Skirting">Skirting</option>
+          <option value="Skirting-3">Skirting-3</option>
+        </select>
+        </td>
+      <td><input type="number" name="length" step="0.0001" required></td>
+      <td><input type="number" name="width" step="0.0001" required></td>
+      <td><input type="number" name="pieces" required></td>
+      <td><input type="number" name="ML" step="0.0001" required></td>
+      <td><input type="number" name="SQ_M" step="0.0001" required></td>
+      <td>? days</td>
+      ${t}
+      <td ><input type="text" name="special_finish" class="me-2" placeholder="Special finish"></td>
+      <td> <button class="btn btn-success"><i class="fa fa-check"></i></button></td>
+      `;    
+        tbody.appendChild(tr);
+    event.target.setAttribute('disabled','true')
+    }
+</script>
+{%endblock%}

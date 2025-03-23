@@ -1,0 +1,32 @@
+{%extends 'base.html'%}
+{% load crispy_forms_tags %}
+{%load static%}
+{%block title%}
+Sign Up
+{%endblock%}
+{%block stylesheets%}
+<link href="{%static 'css/style2.css'%}" rel="stylesheet" type="text/css" />
+
+{%endblock stylesheets%}
+{%block content%}
+<div style="width: 100vw;height: 100vh;">
+    <div id="app" class="position-absolute top-50 start-50 translate-middle">
+        <div class="section" style="width: 300px;">
+            <div class="auth-tabs">
+                <button class="tab-btn" data-tab="signup">Sign Up</button>
+            </div>
+            <form id="signup-form" class="form-group w-100" method="post" >
+                {%csrf_token%}
+                {{form.username |as_crispy_field }}
+                {{form.password1 |as_crispy_field }}
+                {{form.password2 |as_crispy_field }}
+                {{form.role | as_crispy_field}}
+                <button type="submit">Sign Up</button>
+            </form>
+        </div>
+    </div>
+</div>
+{%endblock%}
+
+{%block javascript%}
+{%endblock%}
