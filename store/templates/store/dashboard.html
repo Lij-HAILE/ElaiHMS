@@ -47,7 +47,7 @@ Jovial Management System
 
                 {%for item in ord%}
             <tr>
-                <td>{{item.id}}</td>
+                <td>{{forloop.counter}}</td>
                 <td>{{item.customer}}</td>
                 <td>{{item.type}}</td>
                 <td>{{item.length}}</td>
@@ -58,12 +58,10 @@ Jovial Management System
                 {%if request.user.role == "FT"%}
                     {%if item.complete == None  %}
                     <td><input id="complete-{{item.id}}" onkeypress="getData2(event)" class="w-50" type="number" name="complete">
-                        <button data-id="{{item.id}}" onclick="GetData(event)" class="btn btn-success btn-sm"><i style="font-size: small;" data-id="{{item.id}}" class="fa fa-check"></i></button></td>
                     {%elif item.pieces == item.complete%}
                         <td>{{item.complete}} Pieces <span style="height: 25px;" class="ms-2 btn btn-success p-1 rounded-full"><i style="font-size: small;" class="d-flex align-items-center fa fa-check"></i></span></td>
                     {%else%}
-                    <td><input data-id="{{item.id}}" onkeypress="getData2(event)" value="{{item.complete}}" class="w-50" type="number" id="daysMy" name="complete"> 
-                        <button data-id="{{item.id}}" onclick="GetData(event)" class="btn btn-success btn-sm"><i style="font-size: small;" data-id="{{item.id}}" class="fa fa-check"></i></button>
+                    <td><input id="complete-{{item.id}}" data-id="{{item.id}}" onkeypress="getData2(event)" value="{{item.complete}}" class="w-50" type="number" id="daysMy" name="complete"> 
                     </td>
                     {%endif%}
                 {%else%}
@@ -78,6 +76,9 @@ Jovial Management System
                 {%else%}
                 <td>{{item.special_finish}}</td>
                 {%endif%}
+                {%if request.user.role == "FT" and item.pieces != item.complete%}
+                <td class="d-flex justify-content-center"><button data-id="{{item.id}}" onclick="GetData(event)" class="btn btn-success btn-sm"><i style="font-size: small;" data-id="{{item.id}}" class="fa fa-check"></i></button></td>
+                    {%endif%}
                 {%if request.user.role == "AD"%}
             <td><button data-id="{{item.id}}" onclick="deleteOrder(event)" class="btn btn-danger"><i data-id="{{item.id}}" class="fa fa-trash"></i></button></td>
                 {%endif%}
@@ -165,7 +166,7 @@ Jovial Management System
             
                             {%for item in tab.order_set.all%}
                         <tr>
-                            <td>{{item.id}}</td>
+                            <td>{{forloop.counter}}</td>
                             <td>{{item.customer}}</td>
                             <td>{{item.type}}</td>
                             <td>{{item.length}}</td>
@@ -175,14 +176,12 @@ Jovial Management System
                             <td>{{item.SQ_M}}</td>
                             {%if request.user.role == "FT"%}
                                 {%if item.complete == None  %}
-                                <td><input data-id="{{item.id}}" onkeypress="getData2(event)" class="w-50" type="number"  name="complete"> 
-                                 <button data-id="{{item.id}}" onclick="GetData(event)" class="btn btn-success btn-sm"><i style="font-size: small;" data-id="{{item.id}}" class="fa fa-check"></i></button>
+                                <td><input data-id="{{item.id}}" id="complete={{item.id}}" onkeypress="getData2(event)" class="w-50" type="number"  name="complete"> 
                                 </td>
                                 {%elif item.pieces == item.complete%}
                                     <td>{{item.complete}} Pieces <span style="height: 25px;" class="ms-2 btn btn-success p-1 rounded-full"><i style="font-size: small;" class="d-flex align-items-center fa fa-check"></i></span></td>
                                 {%else%}
-                                <td><input data-id="{{item.id}}" onkeypress="getData2(event)" value="{{item.complete}}" class="w-50" type="number" id="daysMy" name="complete">
-                                    <button data-id="{{item.id}}" onclick="GetData(event)" class="btn btn-success btn-sm"><i style="font-size: small;" data-id="{{item.id}}" class="fa fa-check"></i></button>
+                                <td><input id="complete={{item.id}}" data-id="{{item.id}}" onkeypress="getData2(event)" value="{{item.complete}}" class="w-50" type="number" id="daysMy" name="complete">
                                 </td>
                                 {%endif%}
                             {%else%}
@@ -196,6 +195,9 @@ Jovial Management System
                             <td>------------</td>
                             {%else%}
                             <td>{{item.special_finish}}</td>
+                            {%endif%}
+                            {%if request.user.role == "FT" and item.pieces != item.complete%}
+                        <td><button data-id="{{item.id}}" onclick="GetData(event)" class="btn btn-success btn-sm"><i style="font-size: small;" data-id="{{item.id}}" class="fa fa-check"></i></button></td>
                             {%endif%}
                             {%if request.user.role == "AD"%}
                         <td><button data-id="{{item.id}}" onclick="deleteOrder(event)" class="btn btn-danger"><i data-id="{{item.id}}" class="fa fa-trash"></i></button></td>
