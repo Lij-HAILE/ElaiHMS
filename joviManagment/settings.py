@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'joviManagment.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / "haile",
+        'NAME': BASE_DIR / "haile.sqlite3",
     }
 }
 
