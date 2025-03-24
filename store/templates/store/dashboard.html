@@ -57,17 +57,20 @@ Jovial Management System
                 <td>{{item.SQ_M}}</td>
                 {%if request.user.role == "FT"%}
                     {%if item.complete == None  %}
-                    <td><input data-id="{{item.id}}" class="w-50" type="number" onkeypress="GetData(event)" name="complete"> Pieces</td>
+                    <td><input id="complete-{{item.id}}" onkeypress="getData2(event)" class="w-50" type="number" name="complete">
+                        <button data-id="{{item.id}}" onclick="GetData(event)" class="btn btn-success btn-sm"><i style="font-size: small;" data-id="{{item.id}}" class="fa fa-check"></i></button></td>
                     {%elif item.pieces == item.complete%}
                         <td>{{item.complete}} Pieces <span style="height: 25px;" class="ms-2 btn btn-success p-1 rounded-full"><i style="font-size: small;" class="d-flex align-items-center fa fa-check"></i></span></td>
                     {%else%}
-                    <td><input data-id="{{item.id}}" value="{{item.complete}}" onkeypress="GetData(event)" class="w-50" type="number" id="daysMy" name="complete"> Pieces</td>
+                    <td><input data-id="{{item.id}}" onkeypress="getData2(event)" value="{{item.complete}}" class="w-50" type="number" id="daysMy" name="complete"> 
+                        <button data-id="{{item.id}}" onclick="GetData(event)" class="btn btn-success btn-sm"><i style="font-size: small;" data-id="{{item.id}}" class="fa fa-check"></i></button>
+                    </td>
                     {%endif%}
                 {%else%}
                 {%if item.complete == None%}
-                    <td>?? days</td>
+                    <td>?? Pieces</td>
                     {%else%}
-                    <td>{{item.complete}} days</td>
+                    <td>{{item.complete}} Pieces</td>
                 {%endif%}
                 {%endif%}
                 {%if item.special_finish == None %}
@@ -172,11 +175,15 @@ Jovial Management System
                             <td>{{item.SQ_M}}</td>
                             {%if request.user.role == "FT"%}
                                 {%if item.complete == None  %}
-                                <td><input data-id="{{item.id}}" class="w-50" type="number" onkeypress="GetData(event)" name="complete"> Pieces</td>
+                                <td><input data-id="{{item.id}}" onkeypress="getData2(event)" class="w-50" type="number"  name="complete"> 
+                                 <button data-id="{{item.id}}" onclick="GetData(event)" class="btn btn-success btn-sm"><i style="font-size: small;" data-id="{{item.id}}" class="fa fa-check"></i></button>
+                                </td>
                                 {%elif item.pieces == item.complete%}
                                     <td>{{item.complete}} Pieces <span style="height: 25px;" class="ms-2 btn btn-success p-1 rounded-full"><i style="font-size: small;" class="d-flex align-items-center fa fa-check"></i></span></td>
                                 {%else%}
-                                <td><input data-id="{{item.id}}" value="{{item.complete}}" onkeypress="GetData(event)" class="w-50" type="number" id="daysMy" name="complete"> Pieces</td>
+                                <td><input data-id="{{item.id}}" onkeypress="getData2(event)" value="{{item.complete}}" class="w-50" type="number" id="daysMy" name="complete">
+                                    <button data-id="{{item.id}}" onclick="GetData(event)" class="btn btn-success btn-sm"><i style="font-size: small;" data-id="{{item.id}}" class="fa fa-check"></i></button>
+                                </td>
                                 {%endif%}
                             {%else%}
                             {%if item.complete == None%}
@@ -297,6 +304,20 @@ Jovial Management System
             xhr.send()
     }
      function GetData (event){
+        var obj=document.getElementById(`complete-${event.target.dataset.id}`)
+        event.preventDefault()
+        if(obj && obj.value){
+            var params =`id=${event.target.dataset.id}&time=${obj.value}`
+            var xhr = new XMLHttpRequest();
+            xhr.onload = (e) => {
+                window.location.reload()
+            }
+            xhr.open("POST", "{%url 'edit-time' %}", true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send(params)
+            }
+    }
+    function getData2(event){
         if(event.code == "Enter"){
             event.preventDefault()
             var params =`id=${event.target.dataset.id}&time=${event.target.value}`
@@ -307,7 +328,7 @@ Jovial Management System
             xhr.open("POST", "{%url 'edit-time' %}", true);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             xhr.send(params)
-            }
+            }  
     }
 </script>
 <script>
