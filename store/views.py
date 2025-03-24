@@ -18,7 +18,6 @@ class MyDashboard(LoginRequiredMixin,ListView):
     queryset = Order.objects.filter(table=1)
     model =Order
     template_name ="store/dashboard.html"
-    paginate_by = 8
     context_object_name = 'ord'
     def get_context_data(self, **kwargs):
         context =super().get_context_data(**kwargs)
